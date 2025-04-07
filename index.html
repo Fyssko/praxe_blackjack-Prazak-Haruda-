@@ -1,1 +1,76 @@
+<?php
+session_start();
 
+// Initialize game
+if (!isset($_SESSION['score'])) {
+    $_SESSION['score'] = 0;
+    $_SESSION['game_over'] = false;
+    $_SESSION['message'] = '';
+}
+
+// Roll
+if (isset($_POST['roll']) && !$_SESSION['game_over']) {
+    $roll = rand(1, 6) + rand(1, 6);
+    $_SESSION['score'] += $roll;
+    $_SESSION['message'] = "You rolled $roll.";
+
+    if ($_SESSION['score'] > 21) {
+        $_SESSION['game_over'] = true;
+        $_SESSION['message'] .= " You busted with {$_SESSION['score']}!";
+    }
+}
+
+// Stand
+if (isset($_POST['stand'])) {
+    if ($_SESSION['score'] == 21) {
+        $_SESSION['game_over'] = true;
+        $_SESSION['message'] = "You hit 21! You win!";
+        $_SESSION['win'] = true;
+    } else {
+        $_SESSION['game_over'] = true;
+        $_SESSION['message'] = "You stood at {$_SESSION['score']}. That's not 21.";
+    }
+}
+
+// Reset
+if (isset($_POST['reset'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack with Dice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎲 Blackjack with Dice</h1>
+        <p>Score: <?= $_SESSION['score'] ?></p>
+        <p><?= $_SESSION['message'] ?></p>
+
+        <?php if (!$_SESSION['game_over']): ?>
+            <form method="post">
+                <button name="roll">Roll</button>
+                <button name="stand">Stand</button>
+            </form>
+        <?php else: ?>
+            <form method="post">
+                <button name="reset">Play Again</button>
+            </form>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['win']) && $_SESSION['win']): ?>
+            <div class="win">
+                <img src="KŘESADLO.jpg" alt="You Win">
+                <audio autoplay>
+                    <source src="KŘESADLO!!!.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
