@@ -1,36 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.game-container {
-    background: #222;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 10px #444;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #1b1b1b;
+  color: #fff;
+  padding-top: 50px;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 10px;
+  border-radius: 10px;
 }
 
 button:hover {
-    background: #444;
+  background-color: #45a049;
 }
 
-.win img {
-    margin-top: 20px;
-    width: 300px;
-    border-radius: 10px;
+img {
+  margin-top: 20px;
+  max-width: 400px;
 }
